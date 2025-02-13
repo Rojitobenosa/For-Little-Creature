@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day</title>
+    <style>
+        body {
+            background-color: #ffebf0;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: #d63384;
+            padding: 20px;
+        }
+
+        .container {
+            margin-top: 10%;
+        }
+
+        .image-box {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 3px solid #ff69b4;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+
+        p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 20px auto;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #d63384;
+        }
+
+        #message, #nextBtn, .quiz, #seeMessageBtn {
+            display: none; /* Fix: Ensures they are all hidden initially */
+            margin-top: 20px;
+        }
+
+        .quiz input {
+            padding: 5px;
+            font-size: 16px;
+            width: 200px;
+            text-align: center;
+        }
+
+        .heart {
+            font-size: 50px;
+            color: #ff69b4;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- First Page -->
+    <div class="container" id="page1">
+        <div class="image-box">
+            <img src="cat.jpg" alt="Valentine Image">
+        </div>
+        <h1>Will you be my Valentine?</h1>
+
+        <div class="buttons">
+            <button onclick="showMessage(true)">Yes</button>
+            <button onclick="showMessage(false)">No</button>
+        </div>
+
+        <p id="message"></p>
+        <button id="nextBtn" onclick="startQuiz()">Next</button>
+    </div>
+
+    <!-- Quiz Section (One question at a time) -->
+    <div class="container quiz" id="quiz">
+        <p id="quizQuestion"></p>
+        <input type="text" id="answerInput" placeholder="Type here">
+        <br><br>
+        <button onclick="checkAnswer()">Submit</button>
+        <p id="quizMessage"></p>
+    </div>
+
+    <!-- Button to reveal final message -->
+    <div class="container" id="finalStep">
+        <button id="seeMessageBtn" onclick="showFinalMessage()">Here's something I wrote for you</button>
+    </div>
+
+    <!-- Final Page with Message -->
+    <div class="container" id="finalMessage" style="display: none;">
+       <h1>Thank You for Being You</h1>
+        <p>
+            There are so many things I want to say, but I’ll start with the most important one<b>thank you.</b>
+        </p>
+        <p>
+            Thank you for everything. For the joy you bring, the kindness you show, and the way you make life more beautiful just by being in it.
+            You have this incredible way of making people feel special, and I feel truly lucky just to know you.
+        </p>
+        <p>
+            I know almost everything about you.<br>
+            I know your birthday—the day the world became a better place because you were born.<br>
+            I know your favorite color,the shade that brings you peace.<br>
+            I know your favorite food,the taste that comforts you on hard days.<br>
+            I know the little things that make you smile and the moments that make your eyes light up.<br>
+            I know the things that hurt you,the silent battles you fight, even when no one else sees.
+        </p>
+        <p>
+            But unlucky for me… <b>I don’t know how to win your heart.</b>
+        </p>
+        <p>
+            I wish I did. Because if I could, I would do everything to make you happy. I would give you all the love, care, and appreciation that you deserve.
+            But even if I never figure it out, I just want you to know this:
+        </p>
+        <p>
+            You inspire me in ways I can’t even explain. You make me want to be a better person.
+            Your strength, your kindness, and your way of seeing the world remind me that there is so much good in life.
+            No matter how hard things get, thinking of you gives me motivation to keep going, to push forward, and to always strive to be the best version of myself.
+            I know wev'e only been together for four months ,but now its already been six months and i still can't move on.
+            i dont know why , i hope i do .But i have soething to share to you , i learnt from you na don't use sweet words
+            just to mske somoeane to comeback. when the last time you asked me i can't directly answer you so , i just tell
+            you the things that ive observed from you!!!
+        </p>
+        <p>
+            This website is just a simple thing I made for you—nothing compared to everything you’ve done for me.
+            It’s just my way of saying <b>thank you</b> and letting you know how much I appreciate you.
+            You mean more to me than words can express, and I hope that, even in the smallest way, this message makes you smile.
+        </p>
+        <p>
+            So today, on Valentine's Day, I just want you to know:<br>
+            You are <b>appreciated.</b><br>
+            You are <b>important.</b><br>
+            You are <b>one of a kind.</b><br>
+            And no matter what, you <b>deserve all the happiness in the world.</b>
+        </p>+
+        <p class="heart">❤️</p>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        const questions = [
+            { question: "What is my birthday?", answers: ["01 28 2008", "01/28/2008", "28-01-2008", "january 28 2008"] },
+            { question: "What is my favorite color?", answers: ["blue"] },
+            { question: "What do I prefer, dog or cat?", answers: ["cat"] }
+        ];
+
+        function showMessage(isYes) {
+            let messageBox = document.getElementById("message");
+            let nextBtn = document.getElementById("nextBtn");
+
+            if (isYes) {
+                messageBox.innerHTML = "Aww, thank you for saying yes! But guess what? Whether you pressed yes or no, I just wanted to leave you with a heartfelt message.";
+            } else {
+                messageBox.innerHTML = "I had a feeling you might say no, and that's okay! Because even you pick yes it will just end up with the same msg."
+            }
+
+            messageBox.style.display = "block";
+            nextBtn.style.display = "block";
+        }
+
+        function startQuiz() {
+            document.getElementById("page1").style.display = "none";
+            document.getElementById("quiz").style.display = "block";
+            showNextQuestion();
+        }
+
+        function showNextQuestion() {
+            if (currentQuestion < questions.length) {
+                document.getElementById("quizQuestion").innerText = questions[currentQuestion].question;
+                document.getElementById("answerInput").value = "";
+                document.getElementById("quizMessage").innerText = "";
+            } else {
+                document.getElementById("quiz").style.display = "none";
+                document.getElementById("seeMessageBtn").style.display = "block"; // Fix: Show final message button
+            }
+        }
+
+        function checkAnswer() {
+            let answer = document.getElementById    ("answerInput").value.trim().toLowerCase();
+            let correctAnswers = questions[currentQuestion].answers;
+            let quizMessage = document.getElementById("quizMessage");
+
+            if (correctAnswers.includes(answer)) {
+                currentQuestion++;
+                showNextQuestion();
+            } else {
+                quizMessage.innerHTML = "Oops! Try again.";
+            }
+        }
+
+        function showFinalMessage() {
+            document.getElementById("finalStep").style.display = "none";
+            document.getElementById("finalMessage").style.display = "block";
+        }
+    </script>
+</body>
+</html>
+
